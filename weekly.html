@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub 本周热门项目 · 2026-08-05</title>
+<style>
+  :root {
+    --bg:#0d1117; --bg2:#161b22; --card:#161b22; --border:#30363d; --border2:#21262d;
+    --text:#e6edf3; --text2:#8b949e; --text3:#6e7681;
+    --accent:#3b82f6; --accent2:#60a5fa; --accent-bg:rgba(59,130,246,.12);
+    --star:#fbbf24; --fork:#a78bfa; --intro:#34d399; --chip-bg:#21262d; --chip-text:#8b949e;
+    --track:#21262d; --hover-border:#60a5fa; --scrollbar:#30363d;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+         background:var(--bg); color:var(--text); line-height:1.55; }
+  ::-webkit-scrollbar { width:9px; height:9px; }
+  ::-webkit-scrollbar-thumb { background:var(--scrollbar); border-radius:6px; }
+  .hero { background:linear-gradient(135deg,#161b22 0%,#1e40af 100%); color:#fff; padding:44px 20px 36px;
+          text-align:center; position:relative; overflow:hidden; border-bottom:1px solid var(--border); }
+  .hero::before { content:''; position:absolute; width:320px; height:320px; background:#60a5fa;
+                  filter:blur(60px); opacity:.35; border-radius:50%; top:-120px; left:-80px; }
+  .hero::after { content:''; position:absolute; width:260px; height:260px; background:#c084fc;
+                 filter:blur(60px); opacity:.3; border-radius:50%; bottom:-110px; right:-60px; }
+  .hero-inner { position:relative; z-index:1; max-width:1100px; margin:0 auto; }
+  .hero h1 { font-size:30px; font-weight:800; }
+  .hero p { margin-top:8px; opacity:.85; font-size:13.5px; }
+  .hero-stats { display:flex; justify-content:center; gap:36px; margin-top:24px; flex-wrap:wrap; }
+  .hs { padding:12px 22px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+        border-radius:14px; min-width:120px; }
+  .hs b { font-size:24px; display:block; }
+  .hs span { font-size:12px; opacity:.8; }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 16px 40px; }
+  .controls { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:16px; margin:20px 0 14px; }
+  .row1 { display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap; align-items:center; }
+  .search { flex:1; min-width:220px; padding:10px 14px; background:#0d1117; border:1px solid var(--border);
+             border-radius:10px; color:var(--text); font-size:14px; outline:none; }
+  .search:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-bg); }
+  select { padding:10px 12px; background:#0d1117; border:1px solid var(--border); border-radius:10px;
+            color:var(--text); font-size:13px; outline:none; cursor:pointer; }
+  .range-btn { padding:7px 13px; border-radius:10px; border:1px solid var(--border); background:#0d1117;
+                color:var(--text2); font-size:12.5px; cursor:pointer; }
+  .range-btn.on { background:var(--accent); color:#fff; border-color:var(--accent); font-weight:600; }
+  .chips { display:flex; flex-wrap:wrap; gap:7px; }
+  .chip { padding:5px 12px; border-radius:999px; border:1px solid var(--border); background:var(--chip-bg);
+           color:var(--chip-text); font-size:12px; cursor:pointer; }
+  .chip.on { color:#fff; font-weight:700; border-color:transparent; transform:translateY(-1px); }
+  .chip b { margin-left:4px; opacity:.75; font-size:10.5px; }
+  .meta { display:flex; justify-content:space-between; margin-bottom:12px; font-size:13px; color:var(--text2); flex-wrap:wrap; gap:8px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:14px 18px; margin-bottom:9px;
+           transition:transform .15s, border-color .15s, box-shadow .15s; }
+  .card:hover { border-color:var(--hover-border); transform:translateY(-2px); box-shadow:0 6px 22px rgba(0,0,0,.3); }
+  .ctop { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .rank { font-size:12px; font-weight:700; color:var(--text3); min-width:32px; }
+  .cname { font-size:15px; font-weight:700; }
+  .cname a { color:var(--accent); text-decoration:none; }
+  .cname a:hover { text-decoration:underline; }
+  .tag-new { font-size:10.5px; padding:2px 9px; border-radius:999px; background:rgba(52,211,153,.15); color:#34d399; font-weight:700; }
+  .tag-active { font-size:10.5px; padding:2px 9px; border-radius:999px; background:rgba(251,191,36,.15); color:#fbbf24; font-weight:700; }
+  .ccat { font-size:10.5px; padding:2px 10px; border-radius:999px; font-weight:700; }
+  .clang { font-size:10.5px; color:var(--text2); background:var(--chip-bg); border:1px solid var(--border2); border-radius:999px; padding:2px 10px; }
+  .cstar { color:var(--star); font-weight:700; font-size:12.5px; }
+  .cfork { color:var(--fork); font-size:12.5px; }
+  .cyear { color:var(--text2); font-size:12px; }
+  .cintro { margin-top:8px; font-size:13.5px; color:var(--intro); }
+  .cdesc { margin-top:3px; font-size:12px; color:var(--text2); }
+  .ctopics { margin-top:7px; display:flex; gap:6px; flex-wrap:wrap; }
+  .ctopics span { font-size:10.5px; color:var(--accent); background:var(--accent-bg); border-radius:5px; padding:1px 9px; }
+  .pager { display:flex; gap:6px; justify-content:center; margin-top:22px; align-items:center; flex-wrap:wrap; }
+  .pg { min-width:36px; height:36px; padding:0 11px; border-radius:9px; border:1px solid var(--border);
+         background:var(--bg2); color:var(--text2); cursor:pointer; font-size:13px; font-weight:600;
+         display:flex; align-items:center; justify-content:center; }
+  .pg.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .pg:disabled { opacity:.38; cursor:default; }
+  .pg-dots { color:var(--text3); padding:0 4px; letter-spacing:2px; }
+  .empty { text-align:center; color:var(--text2); padding:40px 0; }
+  .footer { text-align:center; color:var(--text3); font-size:12px; margin-top:30px; }
+  .fade-in { animation:fadeIn .3s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-inner">
+    <h1>🔥 GitHub 本周热门项目</h1>
+    <p>统计周期 2026-07-29 ~ 2026-08-05 · 数据快照 2026-08-05 02:12:24 · 数据源：GitHub Search API</p>
+    <div class="hero-stats">
+      <div class="hs"><b>91</b><span>收录项目</span></div>
+      <div class="hs"><b>41</b><span>🆕 本周新星</span></div>
+      <div class="hs"><b>50</b><span>🔥 活跃热门</span></div>
+      <div class="hs"><b>15</b><span>功能分类</span></div>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+  <div class="controls">
+    <div class="row1">
+      <input class="search" id="q" placeholder="🔍 搜索项目名 / 描述 / 简介关键词…">
+      <select id="sortSel">
+        <option value="stars">按星标 ↓</option><option value="starsA">按星标 ↑</option>
+        <option value="forks">按 Fork ↓</option><option value="year">按创建时间 ↓</option>
+      </select>
+    </div>
+    <div class="row1">
+      <span style="font-size:12px;color:var(--text2)">星标区间：</span>
+      <button class="range-btn on" data-r="0">全部</button>
+      <button class="range-btn" data-r="10000">1 万+</button>
+      <button class="range-btn" data-r="5000">5 千+</button>
+      <button class="range-btn" data-r="1000">1 千+</button>
+    </div>
+    <div class="chips" id="catChips"></div>
+  </div>
+  <div class="meta">
+    <span id="count"></span><span id="pageInfo"></span>
+  </div>
+  <div id="list"></div>
+  <div class="pager" id="pager"></div>
+  <div class="footer">数据来源：GitHub Search API · 生成 2026-08-05 02:12:24 · 分类简介为规则自动生成 · 「GitHub 每周热门项目」自动化任务构建</div>
+</div>
+<script>
+const CATS = ["后端框架与运行时", "学习资源与教程", "AI 大模型与智能体", "前端框架与 UI 组件", "操作系统与底层系统", "机器学习与数据科学", "其他工具与资源", "开发者工具与 CLI", "音视频与多媒体", "移动开发与跨平台", "自动化与效率工具", "云原生与 DevOps", "金融与商业应用", "安全与隐私", "聊天、社交与通信"];
+const COLORS = ["#3b82f6", "#f97316", "#10b981", "#8b5cf6", "#eab308", "#06b6d4", "#ef4444", "#22c55e", "#a855f7", "#0ea5e9", "#f59e0b", "#84cc16", "#ec4899", "#64748b", "#a78bfa", "#2dd4bf", "#fb923c", "#94a3b8"];
+const DATA = [["public-apis/public-apis", "https://github.com/public-apis/public-apis", 454362, 50095, "2016", "Python", 0, "public-apis 是一个后端服务与 API类开源项目。", "A collective list of free APIs", ["api", "apis", "dataset"], "active"], ["freeCodeCamp/freeCodeCamp", "https://github.com/freeCodeCamp/freeCodeCamp", 453484, 45854, "2014", "TypeScript", 1, "freeCodeCamp 是一个学习与教程类开源项目。", "freeCodeCamp.org's open-source codebase and curriculum. Learn math, programming, and computer science for free.", ["careers", "certification", "community"], "active"], ["EbookFoundation/free-programming-books", "https://github.com/EbookFoundation/free-programming-books", 393715, 66606, "2013", "Python", 1, "free-programming-books 是一个学习与教程，AI 应用/大模型类开源项目。", ":books: Freely available programming books", ["books", "education", "hacktoberfest"], "active"], ["openclaw/openclaw", "https://github.com/openclaw/openclaw", 385122, 80947, "2025", "TypeScript", 2, "openclaw 是一个AI 应用/大模型类开源项目。", "Your own personal AI assistant. Any OS. Any Platform. The lobster way. 🦞", ["ai", "assistant", "crustacean"], "active"], ["nilbuild/developer-roadmap", "https://github.com/nilbuild/developer-roadmap", 363591, 44724, "2017", "TypeScript", 3, "developer-roadmap 是一个学习与教程类开源项目。", "Interactive roadmaps, guides and other educational content to help developers grow in their careers.", ["angular-roadmap", "backend-roadmap", "blockchain-roadmap"], "active"], ["vinta/awesome-python", "https://github.com/vinta/awesome-python", 312147, 28438, "2014", "Python", 1, "awesome-python 是一个编程学习 / 教程 / 面试准备 / 精选资源类开源项目。", "An opinionated list of Python frameworks, libraries, tools, and resources", ["awesome", "collections", "python"], "active"], ["awesome-selfhosted/awesome-selfhosted", "https://github.com/awesome-selfhosted/awesome-selfhosted", 310624, 14571, "2015", "", 1, "awesome-selfhosted 是一个后端服务与 API类开源项目。", "A list of Free Software network services and web applications which can be hosted on your own servers", ["awesome", "awesome-list", "cloud"], "active"], ["practical-tutorials/project-based-learning", "https://github.com/practical-tutorials/project-based-learning", 276475, 35579, "2017", "Python", 0, "project-based-learning 是一个学习与教程类开源项目。", "Curated list of project-based tutorials", ["beginner-project", "cpp", "golang"], "active"], ["obra/superpowers", "https://github.com/obra/superpowers", 266315, 23810, "2025", "Shell", 2, "superpowers 是一个AI 应用/大模型类开源项目。", "An agentic skills framework & software development methodology that works.", ["ai", "brainstorming", "coding"], "active"], ["react/react", "https://github.com/react/react", 246925, 51182, "2013", "JavaScript", 3, "react 是一个Web 前端框架 / UI 组件库 / 可视化类开源项目。", "The library for web and native user interfaces.", ["declarative", "frontend", "javascript"], "active"], ["torvalds/linux", "https://github.com/torvalds/linux", 241636, 63744, "2011", "C", 4, "linux 是一个操作系统 / 内核 / 底层系统类开源项目。", "Linux kernel source tree", [], "active"], ["affaan-m/ECC", "https://github.com/affaan-m/ECC", 237635, 36103, "2026", "JavaScript", 2, "ECC 是一个搜索引擎/检索，安全与隐私，AI 应用/大模型类开源项目。", "The agent harness performance optimization system. Skills, instincts, memory, security, and research-first development f", ["ai-agents", "anthropic", "claude"], "active"], ["NousResearch/hermes-agent", "https://github.com/NousResearch/hermes-agent", 225402, 43761, "2025", "Python", 2, "hermes-agent 是一个AI 应用/大模型类开源项目。", "The agent that grows with you", ["ai", "ai-agent", "ai-agents"], "active"], ["TheAlgorithms/Python", "https://github.com/TheAlgorithms/Python", 223477, 50924, "2016", "Python", 5, "Python 是一个机器学习 / 数据分析 / 算法库类开源项目。", "All Algorithms implemented in Python", ["algorithm", "algorithm-competitions", "algorithms-implemented"], "active"], ["mattpocock/skills", "https://github.com/mattpocock/skills", 202962, 17516, "2026", "Shell", 6, "skills 是一个AI 应用/大模型类开源项目。", "Skills for Real Engineers. Straight from my .agents directory.", [], "active"], ["n8n-io/n8n", "https://github.com/n8n-io/n8n", 199324, 59897, "2019", "TypeScript", 2, "n8n 是一个自动化与工作流，AI 应用/大模型类开源项目。", "Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host", ["ai", "apis", "automation"], "active"], ["tensorflow/tensorflow", "https://github.com/tensorflow/tensorflow", 196782, 75851, "2015", "C++", 2, "tensorflow 是一个学习与教程，AI 应用/大模型类开源项目。", "An Open Source Machine Learning Framework for Everyone", ["deep-learning", "deep-neural-networks", "distributed"], "active"], ["anomalyco/opencode", "https://github.com/anomalyco/opencode", 193288, 24700, "2025", "TypeScript", 2, "opencode 是一个AI 应用/大模型类开源项目。", "The open source coding agent.", [], "active"], ["ohmyzsh/ohmyzsh", "https://github.com/ohmyzsh/ohmyzsh", 189002, 26575, "2009", "Shell", 7, "ohmyzsh 是一个容器与编排，社交与通讯，AI 应用/大模型类开源项目。", "🙃   A delightful community-driven (with 2,500+ contributors) framework for managing your zsh configuration. Includes 300", ["cli", "cli-app", "oh-my-zsh"], "active"], ["microsoft/vscode", "https://github.com/microsoft/vscode", 188283, 41408, "2015", "TypeScript", 7, "vscode 是一个提升开发效率的 CLI / 编辑器 / 工具链类开源项目。", "Visual Studio Code", ["editor", "electron", "microsoft"], "active"], ["Significant-Gravitas/AutoGPT", "https://github.com/Significant-Gravitas/AutoGPT", 185812, 46051, "2023", "Python", 2, "AutoGPT 是一个AI 应用/大模型类开源项目。", "AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so tha", ["agentic-ai", "agents", "ai"], "active"], ["yt-dlp/yt-dlp", "https://github.com/yt-dlp/yt-dlp", 182414, 15669, "2020", "Python", 8, "yt-dlp 是一个音视频处理/播放类开源项目。", "A feature-rich command-line audio/video downloader", ["cli", "downloader", "python"], "active"], ["avelino/awesome-go", "https://github.com/avelino/awesome-go", 180105, 13450, "2014", "Go", 0, "awesome-go 是一个后端开发框架 / 语言运行时 / API 服务类开源项目。", "A curated list of awesome Go frameworks, libraries and software", ["awesome", "awesome-list", "go"], "active"], ["flutter/flutter", "https://github.com/flutter/flutter", 178161, 30918, "2015", "Dart", 9, "flutter 是一个移动端 / 跨平台应用开发类开源项目。", "Flutter makes it easy and fast to build beautiful apps for mobile and beyond", ["android", "app-framework", "cross-platform"], "active"], ["ollama/ollama", "https://github.com/ollama/ollama", 177770, 17258, "2023", "Go", 2, "ollama 是一个AI 应用/大模型类开源项目。", "Get up and running with Kimi-K2.6, GLM-5.2, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.", ["deepseek", "gemma", "gemma3"], "active"], ["twbs/bootstrap", "https://github.com/twbs/bootstrap", 174556, 78695, "2011", "MDX", 3, "bootstrap 是一个Web 前端框架 / UI 组件库 / 可视化类开源项目。", "The most popular HTML, CSS, and JavaScript framework for developing responsive, mobile first projects on the web.", ["bootstrap", "css", "css-framework"], "active"], ["521xueweihan/HelloGitHub", "https://github.com/521xueweihan/HelloGitHub", 169084, 12525, "2016", "Python", 1, "HelloGitHub 是一个编程学习 / 教程 / 面试准备 / 精选资源类开源项目。", ":octocat: 分享 GitHub 上有趣、入门级的开源项目。Share interesting, entry-level open source projects on GitHub.", ["awesome", "github", "hellogithub"], "active"], ["f/prompts.chat", "https://github.com/f/prompts.chat", 166730, 21534, "2022", "HTML", 2, "prompts.chat 是一个安全与隐私，社交与通讯，AI 应用/大模型类开源项目。", "f.k.a. Awesome ChatGPT Prompts. Share, discover, and collect prompts from the community. Free and open source — self-hos", ["ai", "artificial-intelligence", "awesome-list"], "active"], ["huggingface/transformers", "https://github.com/huggingface/transformers", 163335, 34116, "2018", "Python", 2, "transformers 是一个音视频处理/播放，学习与教程，AI 应用/大模型类开源项目。", "🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and", ["audio", "deep-learning", "deepseek"], "active"], ["firecrawl/firecrawl", "https://github.com/firecrawl/firecrawl", 160874, 9091, "2024", "TypeScript", 2, "firecrawl 是一个搜索引擎/检索，后端服务与 API，网页抓取类开源项目。", "The context API to search, scrape, and interact with the web at scale. 🔥", ["ai", "ai-agents", "ai-crawler"], "active"], ["Snailclimb/JavaGuide", "https://github.com/Snailclimb/JavaGuide", 157516, 46175, "2018", "JavaScript", 2, "JavaGuide 是一个AI 应用/大模型类开源项目。", "Java 面试 & 后端通用面试指南，覆盖计算机基础、数据库、分布式、高并发、系统设计与 AI 应用开发", ["agent", "ai", "context-engineering"], "active"], ["langflow-ai/langflow", "https://github.com/langflow-ai/langflow", 152841, 9793, "2023", "Python", 2, "langflow 是一个应用部署/发布，自动化与工作流，AI 应用/大模型类开源项目。", "Langflow is a powerful tool for building and deploying AI-powered agents and workflows.", ["agents", "chatgpt", "generative-ai"], "active"], ["langgenius/dify", "https://github.com/langgenius/dify", 151334, 23887, "2023", "TypeScript", 2, "dify 是一个应用部署/发布，自动化与工作流，设计与原型类开源项目。", "Build Agentic workflows, RAG pipelines, with rich AI model and tool support on one collaborative workspace. Deploy on cl", ["agent", "agentic-ai", "agentic-framework"], "active"], ["open-webui/open-webui", "https://github.com/open-webui/open-webui", 147840, 21492, "2023", "Python", 2, "open-webui 是一个后端服务与 API，AI 应用/大模型类开源项目。", "User-friendly AI Interface (Supports Ollama, OpenAI API, ...)", ["ai", "llm", "llm-ui"], "active"], ["langchain-ai/langchain", "https://github.com/langchain-ai/langchain", 143417, 23879, "2022", "Python", 2, "langchain 是一个AI 应用/大模型类开源项目。", "The agent engineering platform.", ["agents", "ai", "ai-agents"], "active"], ["x1xhlol/system-prompts-and-models-of-ai-tools", "https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools", 142557, 34826, "2025", "", 2, "system-prompts-and-models-of-ai-tools 是一个AI 应用/大模型类开源项目。", "FULL Augment Code, Claude Code, Cluely, CodeBuddy, Comet, Cursor, Devin AI, Junie, Kiro, Leap.new, Lovable, Manus, Notio", ["ai", "bolt", "cluely"], "active"], ["yangshun/tech-interview-handbook", "https://github.com/yangshun/tech-interview-handbook", 141559, 16733, "2016", "TypeScript", 5, "tech-interview-handbook 是一个机器学习 / 数据分析 / 算法库类开源项目。", "Curated coding interview preparation materials for busy software engineers", ["algorithm", "algorithm-interview", "algorithm-interview-questions"], "active"], ["vercel/next.js", "https://github.com/vercel/next.js", 141335, 31679, "2016", "JavaScript", 3, "next.js 是一个Web 前端框架 / UI 组件库 / 可视化类开源项目。", "The React Framework", ["blog", "browser", "compiler"], "active"], ["anthropics/claude-code", "https://github.com/anthropics/claude-code", 140220, 22556, "2025", "Python", 2, "claude-code 是一个自动化与工作流，AI 应用/大模型类开源项目。", "Claude Code is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster", [], "active"], ["msitarzewski/agency-agents", "https://github.com/msitarzewski/agency-agents", 138506, 22618, "2025", "Shell", 2, "agency-agents 是一个社交与通讯，AI 应用/大模型类开源项目。", "A complete AI agency at your fingertips - From frontend wizards to Reddit community ninjas, from whimsy injectors to rea", [], "active"], ["microsoft/PowerToys", "https://github.com/microsoft/PowerToys", 137456, 8445, "2019", "C", 10, "PowerToys 是一个工作流自动化 / 效率提升 / 信息管理类开源项目。", "Microsoft PowerToys is a collection of utilities that supercharge productivity and customization on Windows", ["advanced-paste", "color-picker", "command-palette"], "active"], ["golang/go", "https://github.com/golang/go", 135581, 19245, "2014", "Go", 7, "go 是一个提升开发效率的 CLI / 编辑器 / 工具链类开源项目。", "The Go programming language", ["go", "golang", "language"], "active"], ["clash-verge-rev/clash-verge-rev", "https://github.com/clash-verge-rev/clash-verge-rev", 135495, 9771, "2023", "TypeScript", 9, "clash-verge-rev 是一个安全与隐私，设计与原型，AI 应用/大模型类开源项目。", "A modern GUI client based on Tauri, designed to run in Windows, macOS and Linux for tailored proxy experience", ["clash", "clash-meta", "clash-verge"], "active"], ["iptv-org/iptv", "https://github.com/iptv-org/iptv", 135131, 7735, "2018", "TypeScript", 6, "iptv 是一个AI 应用/大模型类开源项目。", "Collection of publicly available IPTV channels from all over the world", ["iptv", "m3u", "playlist"], "active"], ["ripienaar/free-for-dev", "https://github.com/ripienaar/free-for-dev", 131099, 13735, "2015", "HTML", 11, "free-for-dev 是一个容器编排 / 云原生基础设施 / 运维监控类开源项目。", "A list of SaaS, PaaS and IaaS offerings that have free tiers of interest to devops and infradev", ["awesome-list", "free-for-developers"], "active"], ["Shubhamsaboo/awesome-llm-apps", "https://github.com/Shubhamsaboo/awesome-llm-apps", 130469, 19254, "2024", "Python", 2, "awesome-llm-apps 是一个AI 应用/大模型类开源项目。", "100+ AI Agents, Agent Skills and RAG Apps - Free and Open Source.", ["agents", "llms", "python"], "active"], ["excalidraw/excalidraw", "https://github.com/excalidraw/excalidraw", 128960, 14699, "2020", "TypeScript", 10, "excalidraw 是一个工作流自动化 / 效率提升 / 信息管理类开源项目。", "Virtual whiteboard for sketching hand-drawn like diagrams", ["canvas", "collaboration", "diagrams"], "active"], ["react/react-native", "https://github.com/react/react-native", 126282, 25198, "2015", "C++", 3, "react-native 是一个Web 前端框架 / UI 组件库 / 可视化类开源项目。", "A framework for building native applications using React", ["android", "app-framework", "cross-platform"], "active"], ["github/spec-kit", "https://github.com/github/spec-kit", 125294, 11193, "2025", "Python", 2, "spec-kit 是一个基于大语言模型的 AI 应用 / 智能体 / 训练推理类开源项目。", "💫 Toolkit to help you get started with Spec-Driven Development", ["ai", "copilot", "development"], "active"], ["farion1231/cc-switch", "https://github.com/farion1231/cc-switch", 124321, 8439, "2025", "Rust", 2, "cc-switch 是一个AI 应用/大模型类开源项目。", "A cross-platform desktop All-in-One assistant for Claude Code, Codex, OpenCode, OpenClaw, Grok Build & Hermes Agent. Onl", ["ai-tools", "claude-code", "codex"], "active"], ["bashalarmistalt/decimen-optical-transfer", "https://github.com/bashalarmistalt/decimen-optical-transfer", 4495, 544, "2026", "TypeScript", 6, "decimen-optical-transfer 是一个开源项目。", "", [], "new"], ["trycompai/crm", "https://github.com/trycompai/crm", 4371, 459, "2026", "TypeScript", 12, "crm 是一个AI 应用/大模型类开源项目。", "An open-source, agentic-first CRM.", [], "new"], ["xdash/FDE-the-Guidance-Book-of-Forward-Deployed-Engineer", "https://github.com/xdash/FDE-the-Guidance-Book-of-Forward-Deployed-Engineer", 2838, 343, "2026", "", 1, "FDE-the-Guidance-Book-of-Forward-Deployed-Engineer 是一个编程学习 / 教程 / 面试准备 / 精选资源类开源项目。", "FDE（前沿部署工程师）从零入门指南（基于范冰《增长黑客》原书框架）", [], "new"], ["FareedKhan-dev/kimi-k3-in-c", "https://github.com/FareedKhan-dev/kimi-k3-in-c", 1792, 303, "2026", "C", 2, "kimi-k3-in-c 是一个基于大语言模型的 AI 应用 / 智能体 / 训练推理类开源项目。", "A 2.78-trillion-parameter Kimi K3 running inference on a single CPU in 8.24 GB of RAM. Portable C99: no BLAS, no framewo", ["avx2", "c99", "cpu-inference"], "new"], ["imsai-sh/zhuzhiliao", "https://github.com/imsai-sh/zhuzhiliao", 1624, 214, "2026", "HTML", 6, "zhuzhiliao：竹知了 —— 一转就哇哇叫的传统玩具，Web 模拟版。零依赖单文件，真实录音采样，移动端优先。（开源项目）。", "竹知了 —— 一转就哇哇叫的传统玩具，Web 模拟版。零依赖单文件，真实录音采样，移动端优先。", [], "new"], ["DannyMac180/sol-advisor", "https://github.com/DannyMac180/sol-advisor", 1281, 90, "2026", "Shell", 6, "sol-advisor：Codex-native architect orchestration with Luna and Terra imp（开源项目）。", "Codex-native architect orchestration with Luna and Terra implementation lanes and mandatory fresh Sol review.", [], "new"], ["genspark-ai/genoffice", "https://github.com/genspark-ai/genoffice", 1205, 182, "2026", "TypeScript", 2, "genoffice 是一个AI 应用/大模型类开源项目。", "An AI-native office suite for macOS and Windows: word processor, spreadsheet, presentations, and PDF.", ["ai", "docx", "electron"], "new"], ["thebuggeddev/anatomy", "https://github.com/thebuggeddev/anatomy", 1128, 312, "2026", "TypeScript", 2, "anatomy 是一个AI 应用/大模型类开源项目。", "An interactive 3D human anatomy explorer built using threejs with GPT 5.6 Sol", [], "new"], ["WilonityDev/WilonityLoader", "https://github.com/WilonityDev/WilonityLoader", 900, 0, "2026", "", 13, "WilonityLoader 是一个游戏，AI 应用/大模型类开源项目。", "Wilonity Loader – cheat lib w/ spoofer, driver bypass, undetected injector for 20+ games (RUST, CS2, Valorant, Tarkov, W", ["arc-raiders", "counter-strike-2", "game"], "new"], ["x4gKing/3x-ui-multi", "https://github.com/x4gKing/3x-ui-multi", 660, 1703, "2026", "JavaScript", 6, "3x-ui-multi 是一个开源项目。", "", [], "new"], ["firecrawl/anydoc", "https://github.com/firecrawl/anydoc", 572, 21, "2026", "Rust", 0, "anydoc 是一个后端开发框架 / 语言运行时 / API 服务类开源项目。", "Convert Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV, and PDF to clean Markdown. Built in Rust, with Node.js an", [], "new"], ["0xwilliamortiz/humanizer-cli", "https://github.com/0xwilliamortiz/humanizer-cli", 567, 72, "2026", "JavaScript", 2, "humanizer-cli 是一个AI 应用/大模型类开源项目。", "33 ways to spot AI-written text, right in your terminal. Before/after examples, draft checker, zero dependencies.", ["ai-slop", "ai-slop-detection", "ai-slop-detector"], "new"], ["brookfacehe2421/flashloan-scalper-bot", "https://github.com/brookfacehe2421/flashloan-scalper-bot", 556, 401, "2026", "JavaScript", 10, "flashloan-scalper-bot 是一个工作流自动化 / 效率提升 / 信息管理类开源项目。", "Quick profit scalper using flashloan mechanics", ["bot", "ethereum", "javascript"], "new"], ["s1dashu/animated-voiceover", "https://github.com/s1dashu/animated-voiceover", 489, 64, "2026", "", 2, "animated-voiceover 是一个音视频处理/播放，自动化与工作流类开源项目。", "Create animated voiceover videos with reusable scripting, visual direction, voice consistency, and CLI-based generation", ["ai-video", "animated-video", "codex-skill"], "new"], ["ddoemonn/interior", "https://github.com/ddoemonn/interior", 483, 15, "2026", "TypeScript", 3, "interior 是一个Web 前端框架 / UI 组件库 / 可视化类开源项目。", "micro-interactions for react, built for the half-second after a click", ["animation", "micro-interactions", "motion"], "new"], ["openai/ten-proofs", "https://github.com/openai/ten-proofs", 467, 42, "2026", "Lean", 6, "ten-proofs：Lean certificates accompanying proofs in mathematics and the（开源项目）。", "Lean certificates accompanying proofs in mathematics and theoretical computer science", [], "new"], ["0xwilliamortiz/ratchet", "https://github.com/0xwilliamortiz/ratchet", 429, 85, "2026", "JavaScript", 2, "ratchet 是一个AI 应用/大模型类开源项目。", "Your agent reads the rules. This checks whether it followed them.", ["ai-agents", "claude-code", "claude-code-plugin"], "new"], ["deedy/qr-data-transfer", "https://github.com/deedy/qr-data-transfer", 393, 74, "2026", "TypeScript", 6, "qr-data-transfer 是一个开源项目。", "", [], "new"], ["sophiamyang/finger-frame-effect-ai", "https://github.com/sophiamyang/finger-frame-effect-ai", 364, 38, "2026", "JavaScript", 2, "finger-frame-effect-ai 是一个基于大语言模型的 AI 应用 / 智能体 / 训练推理类开源项目。", "", [], "new"], ["MarcosSete/awesome-free-ai-course-notes", "https://github.com/MarcosSete/awesome-free-ai-course-notes", 354, 26, "2026", "", 2, "awesome-free-ai-course-notes 是一个学习与教程，AI 应用/大模型类开源项目。", "A curated collection of machine learning and AI lecture notes from the world's leading universities.  This repository gi", [], "new"], ["Packets/Vanta", "https://github.com/Packets/Vanta", 343, 43, "2026", "Solidity", 6, "Vanta：A two-faction battle royale. Own what you earn. The $VANTA w（开源项目）。", "A two-faction battle royale. Own what you earn. The $VANTA war begins 2026.", [], "new"], ["MengTo/complete-shelf", "https://github.com/MengTo/complete-shelf", 340, 55, "2026", "HTML", 3, "complete-shelf 是一个Web 前端框架 / UI 组件库 / 可视化类开源项目。", "An original single-file Three.js library of seven interactive clothbound hardcovers.", ["book-design", "creative-coding", "github-pages"], "new"], ["disler/super-simple-software-factory", "https://github.com/disler/super-simple-software-factory", 328, 68, "2026", "Python", 6, "super-simple-software-factory 是一个自动化与工作流，AI 应用/大模型类开源项目。", "Repeatable agents-plus-code workflows, packaged as one skill, stamped into any repo. Deterministic Python owns the graph", [], "new"], ["HaidarJbeily7/cargo-frisk", "https://github.com/HaidarJbeily7/cargo-frisk", 328, 0, "2026", "Rust", 6, "cargo-frisk 是一个开源项目。", "", [], "new"], ["leonickson1/Swiftlet", "https://github.com/leonickson1/Swiftlet", 317, 8, "2026", "Swift", 6, "Swiftlet 是一个开源项目。", "", [], "new"], ["guillermolg00/morphicons", "https://github.com/guillermolg00/morphicons", 315, 9, "2026", "TypeScript", 3, "morphicons 是一个Web 前端框架 / UI 组件库 / 可视化类开源项目。", "Any icon morphs into any other — universal morphing for stroke-based icons with spring physics. Zero dependencies, ~7 KB", ["animation", "icons", "morphing"], "new"], ["elder-plinius/GL4SS", "https://github.com/elder-plinius/GL4SS", 303, 59, "2026", "TypeScript", 8, "GL4SS 是一个音视频处理/播放，图像处理类开源项目。", "the looking glass — spatiotemporal image + video engine", [], "new"], ["1mm-module/PNGAL", "https://github.com/1mm-module/PNGAL", 297, 37, "2026", "JavaScript", 6, "PNGAL 是一个开源项目。", "", [], "new"], ["patchy631/time-to-first-token", "https://github.com/patchy631/time-to-first-token", 280, 23, "2026", "HTML", 2, "time-to-first-token 是一个AI 应用/大模型类开源项目。", "A 10-week, 30-minutes-a-day roadmap for LLM inference serving and optimization. vLLM, SGLang, quantization, speculative", ["learning-resources", "llm", "llm-inference"], "new"], ["Anionex/codex-vision-proxy", "https://github.com/Anionex/codex-vision-proxy", 272, 12, "2026", "Python", 2, "codex-vision-proxy 是一个图像处理，设计与原型，AI 应用/大模型类开源项目。", "让纯文本模型在 Codex 中无障碍看图(view_image)的更优方案，附为纯文本 LLM 设计的视觉工具包&skill ｜  A superior approach for enabling text-only models to s", ["agent", "agent-skills", "codex"], "new"], ["joeseesun/qiaomu-seo", "https://github.com/joeseesun/qiaomu-seo", 261, 27, "2026", "Python", 2, "qiaomu-seo 是一个搜索引擎/检索，AI 应用/大模型类开源项目。", "Audit, diagnose, research, plan, implement, experiment on, and verify website SEO across Google, Bing, and AI-search sur", [], "new"], ["0rangec3t/Black-cat", "https://github.com/0rangec3t/Black-cat", 250, 32, "2026", "Python", 2, "Black-cat 是一个基于大语言模型的 AI 应用 / 智能体 / 训练推理类开源项目。", "Claude Code RedTeam Skill — Hypothesis-Driven Cognitive Architecture。一个假设-证据驱动的红队skill", ["pentest", "pentest-tools", "red-team"], "new"], ["ZihangDong/toolknit-desktop", "https://github.com/ZihangDong/toolknit-desktop", 245, 37, "2026", "JavaScript", 2, "toolknit-desktop 是一个AI 应用/大模型类开源项目。", "多功能工具箱 · 桌面端开源版 | 音视频/图片/PDF/AI 一站式处理", [], "new"], ["magicrew/doc7", "https://github.com/magicrew/doc7", 242, 5, "2026", "Go", 2, "doc7 是一个AI 应用/大模型类开源项目。", "Turn documents into AI-ready Markdown with visual understanding", ["document-ai", "docx-to-markdown", "local-ai"], "new"], ["kaomei/stickman-video-director", "https://github.com/kaomei/stickman-video-director", 232, 35, "2026", "Shell", 2, "stickman-video-director 是一个音视频处理/播放类开源项目。", "Turn copy into rich one-minute Gemini Omni Flash stickman video prompt packages.", [], "new"], ["onetoken-oss/K3Flight", "https://github.com/onetoken-oss/K3Flight", 226, 0, "2026", "HTML", 2, "K3Flight 是一个后端服务与 API类开源项目。", "Run Kimi K3 locally on CPU with ~55GB measured runtime RAM. A single-file Linux inference server powered by cPilot Runti", ["cpu-inference", "edge-ai", "inference-engine"], "new"], ["chenjin-cmd/wechat-miniprogram-builder", "https://github.com/chenjin-cmd/wechat-miniprogram-builder", 224, 25, "2026", "", 14, "wechat-miniprogram-builder 是一个社交与通讯类开源项目。", "wechat-miniprogram-builder", [], "new"], ["codermyxiaoc/sub2api-guardian", "https://github.com/codermyxiaoc/sub2api-guardian", 223, 11, "2026", "Go", 6, "sub2api-guardian 是一个后端服务与 API类开源项目。", "sub2api-guardian", [], "new"], ["alexan0618/zkky", "https://github.com/alexan0618/zkky", 216, 147, "2026", "Python", 6, "zkky：直卡开源（开源项目）。", "直卡开源", [], "new"], ["luckyzyx/LuckyTool", "https://github.com/luckyzyx/LuckyTool", 209, 36, "2026", "Kotlin", 6, "LuckyTool：对ColorOS进行扩展优化的Xposed模块，永久免费（开源项目）。", "对ColorOS进行扩展优化的Xposed模块，永久免费", [], "new"], ["nfzerox/VirtualMacOniPad", "https://github.com/nfzerox/VirtualMacOniPad", 201, 13, "2026", "Objective-C", 7, "VirtualMacOniPad 是一个AI 应用/大模型类开源项目。", "People have dreamed of running macOS on iPad for more than a decade. Today, that dream comes true. With Virtual Mac, iPa", [], "new"]];
+const PAGE = 50;
+let curCat = -1, curRange = 0, q = '', sort = 'stars', page = 0;
+let filtered = [];
+const catChips = document.getElementById('catChips');
+CATS.forEach((c, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'chip'; btn.style.background = COLORS[i] + '22'; btn.style.color = COLORS[i];
+  btn.innerHTML = c + ' <b>' + DATA.filter(r => r[6] === i).length + '</b>';
+  btn.onclick = () => { curCat = (curCat === i ? -1 : i);
+    [...catChips.children].forEach((b, j) => b.classList.toggle('on', curCat === j)); apply(); };
+  catChips.appendChild(btn);
+});
+document.querySelectorAll('.range-btn').forEach(b => {
+  b.onclick = () => {
+    document.querySelectorAll('.range-btn').forEach(x => x.classList.remove('on'));
+    b.classList.add('on'); curRange = +b.dataset.r; apply();
+  };
+});
+document.getElementById('q').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); page = 0; apply(); });
+document.getElementById('sortSel').addEventListener('change', e => { sort = e.target.value; apply(); });
+function apply() {
+  filtered = DATA.filter(r => {
+    if (curCat !== -1 && r[6] !== curCat) return false;
+    if (curRange && r[2] < curRange) return false;
+    if (q && !(r[0].toLowerCase().includes(q) || r[7].toLowerCase().includes(q) || r[8].toLowerCase().includes(q))) return false;
+    return true;
+  });
+  if (sort === 'stars') filtered.sort((a, b) => b[2] - a[2]);
+  else if (sort === 'starsA') filtered.sort((a, b) => a[2] - b[2]);
+  else if (sort === 'forks') filtered.sort((a, b) => b[3] - a[3]);
+  else filtered.sort((a, b) => b[4].localeCompare(a[4]));
+  page = 0; render();
+}
+function fmt(n) { return n >= 1000000 ? (n/1000000).toFixed(1) + 'M' : n >= 10000 ? (n/1000).toFixed(0) + 'k' : n; }
+function render() {
+  const list = document.getElementById('list');
+  const start = page * PAGE, end = Math.min(start + PAGE, filtered.length);
+  document.getElementById('count').textContent = '匹配 ' + filtered.length + ' / 91 个项目';
+  if (!filtered.length) { list.innerHTML = '<div class="empty">😕 没有匹配的项目，换个关键词试试</div>'; renderPager(); return; }
+  let h = '';
+  for (let i = start; i < end; i++) {
+    const r = filtered[i];
+    const [name, url, stars, forks, year, lang, ci, intro, desc, topics, tag] = r;
+    const tagHtml = tag === 'new' ? '<span class="tag-new">🆕 本周新星</span>'
+      : tag === 'active' ? '<span class="tag-active">🔥 活跃热门</span>'
+      : '<span class="tag-new">🆕 新星</span><span class="tag-active">🔥 活跃</span>';
+    h += '<div class="card fade-in"><div class="ctop">'
+      + '<span class="rank">#' + (i + 1) + '</span>'
+      + '<span class="cname"><a href="' + url + '" target="_blank">' + name + '</a></span>'
+      + tagHtml
+      + '<span class="ccat" style="background:' + COLORS[ci] + '22;color:' + COLORS[ci] + '">' + CATS[ci] + '</span>'
+      + '<span class="clang">' + (lang || '—') + '</span>'
+      + '<span class="cstar">★ ' + fmt(stars) + '</span>'
+      + '<span class="cfork">⑂ ' + fmt(forks) + '</span>'
+      + '<span class="cyear">📅 ' + year + '</span></div>'
+      + '<div class="cintro">💡 ' + intro + '</div>'
+      + '<div class="cdesc">' + desc + '</div>'
+      + '<div class="ctopics">' + topics.map(t => '<span>' + t + '</span>').join('') + '</div></div>';
+  }
+  list.innerHTML = h; renderPager();
+}
+function renderPager() {
+  const pager = document.getElementById('pager');
+  const pages = Math.max(1, Math.ceil(filtered.length / PAGE));
+  document.getElementById('pageInfo').textContent = '第 ' + (page + 1) + ' / ' + pages + ' 页 · ' + filtered.length + ' 条结果';
+  const nums = [];
+  for (let i = 0; i < pages; i++) if (i === 0 || i === pages - 1 || Math.abs(i - page) <= 2) nums.push(i);
+  const uniq = [...new Set(nums)].sort((a, b) => a - b);
+  let h = '<button class="pg" data-p="prev" ' + (page === 0 ? 'disabled' : '') + '>‹</button>';
+  let last = -2;
+  uniq.forEach(p => {
+    if (p - last > 1) h += '<span class="pg-dots">···</span>';
+    h += '<button class="pg ' + (p === page ? 'on' : '') + '" data-p="' + p + '">' + (p + 1) + '</button>';
+    last = p;
+  });
+  h += '<button class="pg" data-p="next" ' + (page >= pages - 1 ? 'disabled' : '') + '>›</button>';
+  pager.innerHTML = h;
+  pager.querySelectorAll('.pg').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const p = btn.dataset.p;
+      const np = p === 'prev' ? page - 1 : p === 'next' ? page + 1 : +p;
+      if (np < 0 || np >= pages || np === page) return;
+      page = np; render(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+}
+apply();
+</script>
+</body>
+</html>
